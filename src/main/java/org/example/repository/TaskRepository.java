@@ -1,11 +1,20 @@
 package org.example.repository;
 
-import org.example.entity.Task;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
+import org.example.entity.Task;
+import org.jboss.logging.Logger;
+
+import java.util.List;
 
 @ApplicationScoped
-public interface TaskRepository extends PanacheRepository<Task> {
-    // Custom queries can be added here if necessary
-}
+public class TaskRepository implements PanacheRepository<Task> {
+    private static final Logger LOGGER = Logger.getLogger(TaskRepository.class.getName());
 
+    public List<Task> listAllTasks() {
+        LOGGER.debug("Fetching all tasks from database");
+        List<Task> tasks = listAll();
+        LOGGER.debug("Tasks fetched: " + tasks.size());
+        return tasks;
+    }
+}
