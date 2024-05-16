@@ -3,11 +3,10 @@ package org.example.controller;
 import jakarta.inject.Inject;
 import org.example.entity.Task;
 import org.example.repository.TaskRepository;
-import jakarta.transaction.Transactional;  // Add this import
+import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -42,7 +41,7 @@ public class TaskController {
     }
 
     @POST
-    @Transactional  // Add this annotation
+    @Transactional
     public Response create(Task task) {
         LOGGER.info(String.format("Received POST request with Task: %s", task));
         try {
@@ -57,7 +56,7 @@ public class TaskController {
 
     @PUT
     @Path("{id}")
-    @Transactional  // Add this annotation if needed for update
+    @Transactional
     public Response update(@PathParam("id") Long id, Task updateTask) {
         Task task = taskRepository.findById(id);
         if (task != null) {
@@ -65,7 +64,7 @@ public class TaskController {
             task.setDescription(updateTask.getDescription());
             task.setDueDate(updateTask.getDueDate());
             task.setStatus(updateTask.getStatus());
-            taskRepository.persist(task);
+            taskRepository.getEntityManager().merge(task); // Use merge instead of persist
             return Response.ok(task).build();
         } else {
             return Response.status(Response.Status.NOT_FOUND).build();
@@ -74,7 +73,7 @@ public class TaskController {
 
     @DELETE
     @Path("{id}")
-    @Transactional  // Add this annotation if needed for delete
+    @Transactional
     public Response delete(@PathParam("id") Long id) {
         boolean deleted = taskRepository.deleteById(id);
         if (deleted) {

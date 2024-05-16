@@ -22,6 +22,9 @@ public class Task {
     @Column(name = "status")
     private String status;
 
+    @Version
+    private Integer version = 1; // Initialize version
+
     // Getters and setters
     public Integer getId() {
         return id;
@@ -63,6 +66,14 @@ public class Task {
         this.status = status;
     }
 
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
+
     @Override
     public String toString() {
         return "Task{" +
@@ -71,6 +82,7 @@ public class Task {
                 ", description='" + description + '\'' +
                 ", dueDate=" + dueDate +
                 ", status='" + status + '\'' +
+                ", version=" + version +
                 '}';
     }
 }
