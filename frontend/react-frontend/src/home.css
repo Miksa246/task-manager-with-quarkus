@@ -1,0 +1,16 @@
+.home {
+    background-image: url('./images/home-bg.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .home h1, .home p {
+    color: #654321; /* Dark brown color */
+  }
+  

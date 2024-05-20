@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
 import Layout from './components/Layout';
 import TaskList from './components/TaskList';
 import TaskForm from './components/TaskForm';
 import Login from './components/Login';
+import Home from './components/Home'; 
 import axios from 'axios';
 
 const App = () => {
@@ -64,7 +65,7 @@ const App = () => {
         <Router>
             <Layout>
                 <Routes>
-                    <Route path="/" element={<h2>Home</h2>} />
+                    <Route path="/" element={<Home />} /> {/* Use Home component */}
                     <Route path="/tasks" element={<TaskList tasks={tasks} onDelete={handleDeleteTask} />} />
                     <Route path="/tasks/new" element={<TaskForm onSave={handleSaveTask} />} />
                     <Route path="/tasks/:id" element={<TaskForm tasks={tasks} onSave={handleSaveTask} />} />
