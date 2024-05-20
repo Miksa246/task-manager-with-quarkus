@@ -1,12 +1,13 @@
 package org.example.controller;
 
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
-import org.example.entity.Task;
-import org.example.repository.TaskRepository;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import org.example.entity.Task;
+import org.example.repository.TaskRepository;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -20,6 +21,7 @@ public class TaskController {
     TaskRepository taskRepository;
 
     @GET
+    @RolesAllowed("user")
     public Response listAll() {
         LOGGER.info("Received request to list all tasks");
         List<Task> tasks = taskRepository.listAllTasks();
@@ -28,6 +30,7 @@ public class TaskController {
 
     @GET
     @Path("{id}")
+    @RolesAllowed("user")
     public Response getSingle(@PathParam("id") Long id) {
         LOGGER.info(String.format("Received request to get task with ID: %d", id));
         Task task = taskRepository.findById(id);
@@ -42,6 +45,7 @@ public class TaskController {
 
     @POST
     @Transactional
+    @RolesAllowed("user")
     public Response create(Task task) {
         LOGGER.info(String.format("Received POST request with Task: %s", task));
         try {
@@ -57,6 +61,7 @@ public class TaskController {
     @PUT
     @Path("{id}")
     @Transactional
+    @RolesAllowed("user")
     public Response update(@PathParam("id") Long id, Task updateTask) {
         Task task = taskRepository.findById(id);
         if (task != null) {
@@ -74,6 +79,7 @@ public class TaskController {
     @DELETE
     @Path("{id}")
     @Transactional
+    @RolesAllowed("user")
     public Response delete(@PathParam("id") Long id) {
         boolean deleted = taskRepository.deleteById(id);
         if (deleted) {
