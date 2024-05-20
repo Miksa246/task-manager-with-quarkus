@@ -77,15 +77,16 @@ public class TaskController {
     }
 
     @DELETE
-    @Path("{id}")
+    @Path("/{id}")
     @Transactional
     @RolesAllowed("user")
-    public Response delete(@PathParam("id") Long id) {
-        boolean deleted = taskRepository.deleteById(id);
-        if (deleted) {
-            return Response.status(Response.Status.NO_CONTENT).build();
-        } else {
+    public Response deleteTask(@PathParam("id") Long id) {
+        Task task = taskRepository.findById(id);
+        if (task == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
+        taskRepository.delete(task);
+        return Response.noContent().build();
     }
+
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Table, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import TaskItem from './TaskItem';
 
 const TaskList = ({ tasks, onDelete }) => {
     return (
@@ -19,16 +20,7 @@ const TaskList = ({ tasks, onDelete }) => {
                 </thead>
                 <tbody>
                     {tasks.map(task => (
-                        <tr key={task.id}>
-                            <td>{task.title}</td>
-                            <td>{task.description}</td>
-                            <td>{task.dueDate}</td>
-                            <td>{task.status}</td>
-                            <td>
-                                <Link to={`/tasks/${task.id}`} className="btn btn-primary mr-2">Edit</Link>
-                                <Button variant="danger" onClick={() => onDelete(task.id)}>Delete</Button>
-                            </td>
-                        </tr>
+                        <TaskItem key={task.id} task={task} onDelete={onDelete} />
                     ))}
                 </tbody>
             </Table>
